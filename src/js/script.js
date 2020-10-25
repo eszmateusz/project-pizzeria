@@ -92,6 +92,7 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     initAccordion() {
@@ -190,6 +191,24 @@
             price -= option.price;
 
           /* END ELSE IF: if option is not selected and option is default */
+          }
+
+          /* save all picture which match to selector that consist of: dot, paramId, dash and optionId */
+          const allSelectableImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
+          
+          /* START LOOP: display or remove the pictures on pizza or salad */
+          for (let selectableImage of allSelectableImages) {
+
+            /* if option is check, all pictures get class save in classNames.menuProduct.imagesVisible */
+            if (optionSelected) {
+              selectableImage.classList.add(classNames.menuProduct.imageVisible);
+            
+            /* or if option is not check, all pictures lose class save in classNames.menuProduct.imageVisible */
+            } else {
+              selectableImage.classList.remove(classNames.menuProduct.imageVisible);
+            }
+
+          /* END LOOP: display or remove the pictures on pizza or salad */
           }
 
         /* END LOOP: for each optionId in param.options */
