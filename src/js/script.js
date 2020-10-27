@@ -269,31 +269,31 @@
       }
 
       thisWidget.input.value = thisWidget.value;
-  }
+    }
 
-  initActions() {
-    const thisWidget = this;
+    initActions() {
+      const thisWidget = this;
 
-    thisWidget.input.addEventListener('change', function () {
-      thisWidget.setValue(thisWidget.input.value);
-    });
+      thisWidget.input.addEventListener('change', function () {
+        thisWidget.setValue(thisWidget.input.value);
+      });
 
-    thisWidget.linkDecrease.addEventListener('click', function (event) {
-      event.preventDefault();
-      thisWidget.setValue(thisWidget.value - 1);
-    });
+      thisWidget.linkDecrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value - 1);
+      });
 
-    thisWidget.linkIncrease.addEventListener('click', function (event) {
-      event.preventDefault();
-      thisWidget.setValue(thisWidget.value + 1);
-    });
-  }
+      thisWidget.linkIncrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value + 1);
+      });
+    }
 
-  announce() {
-    const thisWidget = this;
+    announce() {
+      const thisWidget = this;
 
-    const event = new Event('updated');
-    thisWidget.element.dispatchEvent(event);
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
     }
   }
 
