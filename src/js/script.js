@@ -134,7 +134,7 @@
         event.preventDefault();
         
         /* toggle active class on element of thisProduct */
-        thisProduct.element.classList.add('active');
+        thisProduct.element.classList.toggle('active');
 
         /* find all active products */
         const allActiveProducts = document.querySelectorAll(select.all.menuProductsActive);
@@ -146,7 +146,7 @@
           if (activeProduct != thisProduct.element) {
 
             /* remove class active for the active product */
-            activeProduct.classList.remove('active');
+            activeProduct.classList.toggle('active');
 
           /* END: if the active product isn't the element of thisProduct */
           }
