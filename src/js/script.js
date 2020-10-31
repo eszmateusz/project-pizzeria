@@ -134,6 +134,7 @@
         event.preventDefault();
         
         /* toggle active class on element of thisProduct */
+        // thisProduct.element.classList.add('active');
         thisProduct.element.classList.toggle('active');
 
         /* find all active products */
@@ -146,6 +147,7 @@
           if (activeProduct != thisProduct.element) {
 
             /* remove class active for the active product */
+            // activeProduct.classList.remove('active');
             activeProduct.classList.toggle('active');
 
           /* END: if the active product isn't the element of thisProduct */
@@ -175,6 +177,7 @@
       thisProduct.cartButton.addEventListener('click', function (event) {
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
     }
 
@@ -183,7 +186,9 @@
 
       /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       const formData = utils.serializeFormToObject(thisProduct.form);
-    
+      
+      thisProduct.params = {};
+
       /* set variable price to equal thisProduct.data.price */
       let price = thisProduct.data.price;
     
@@ -226,6 +231,16 @@
 
             /* if option is check, all pictures get class save in classNames.menuProduct.imagesVisible */
             if (optionSelected) {
+
+              if (!thisProduct.params[paramId]) {
+                thisProduct.params[paramId] = {
+                  label: param.label,
+                  options: {},
+                };
+              }
+              thisProduct.params[paramId].options[optionId] = option.label;
+              // console.log('thisProduct.params:', thisProduct.params);
+
               selectableImage.classList.add(classNames.menuProduct.imageVisible);
             
             /* or if option is not check, all pictures lose class save in classNames.menuProduct.imageVisible */
@@ -243,10 +258,11 @@
       }
 
       /* multiply price by amount */
-      price *= thisProduct.amountWidget.value;
+      thisProduct.priceSingle = price;
+      thisProduct.price = thisProduct.priceSingle * thisProduct.amountWidget.value;
 
       /* set the contents of thisProduct.priceElem to be the value of variable price */
-      thisProduct.priceElem.innerHTML = price;
+      thisProduct.priceElem.innerHTML = thisProduct.price;
     }
 
     initAmountWidget() {
@@ -256,6 +272,15 @@
       thisProduct.amountWidgetElem.addEventListener('updated', function () {
         thisProduct.processOrder();
       });
+    }
+
+    addToCart(){
+      const thisProduct = this;
+
+      thisProduct.name = thisProduct.data.name;
+      thisProduct.amount = thisProduct.amountWidget.value;
+
+      app.cart.add(thisProduct);
     }
   }
 
@@ -323,7 +348,7 @@
     }
   }
 
-  class Cart{
+  class Cart {
     constructor(element) {
       const thisCart = this;
 
@@ -343,19 +368,31 @@
       thisCart.dom.wrapper = element;
 
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
     }
 
     initActions() {
       const thisCart = this;
 
-      console.log('thisCart.dom.wrapper:', thisCart.dom.wrapper);
+      // console.log('thisCart.dom.wrapper:', thisCart.dom.wrapper);
 
       thisCart.dom.toggleTrigger.addEventListener('click', function (event) {
-        console.log('clicked');
+        // console.log('clicked');
         event.preventDefault();
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
-        console.log('thisCart.dom.wrapper:', thisCart.dom.wrapper);
+        //console.log('thisCart.dom.wrapper:', thisCart.dom.wrapper);
       });
+    }
+
+    add(menuProduct) {
+      const thisCart = this;
+    
+      console.log('adding product:', menuProduct);
+
+      const generatedHTML = templates.cartProduct(menuProduct);
+      thisCart.element = utils.createDOMFromHTML(generatedHTML);
+      thisCart.dom.productList.appendChild(thisCart.element);
     }
   }
 
@@ -375,7 +412,7 @@
       thisApp.data = dataSource;
     },
 
-    initCart: function(){
+    initCart: function() {
       const thisApp = this;
 
       const cartElem = document.querySelector(select.containerOf.cart);
