@@ -239,7 +239,6 @@
                 };
               }
               thisProduct.params[paramId].options[optionId] = option.label;
-              // console.log('thisProduct.params:', thisProduct.params);
 
               selectableImage.classList.add(classNames.menuProduct.imageVisible);
             
@@ -294,9 +293,6 @@
 
       thisWidget.setValue(thisWidget.input.value);
       thisWidget.initActions();
-
-      //console.log('AmountWidget:', thisWidget);
-      //console.log('constructor arguments:', element);
     }
 
     getElements(element) {
@@ -360,8 +356,6 @@
       thisCart.getElements(element);
       thisCart.initActions();
 
-      //console.log('new Cart', thisCart);
-
       thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
     }
 
@@ -386,13 +380,11 @@
     initActions() {
       const thisCart = this;
 
-      // console.log('thisCart.dom.wrapper:', thisCart.dom.wrapper);
-
       thisCart.dom.toggleTrigger.addEventListener('click', function (event) {
-        // console.log('clicked');
+
         event.preventDefault();
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
-        //console.log('thisCart.dom.wrapper:', thisCart.dom.wrapper);
+
       });
 
       thisCart.dom.productList.addEventListener('updated', function () {
@@ -407,8 +399,6 @@
     add(menuProduct) {
       const thisCart = this;
     
-      // console.log('adding product:', menuProduct);
-
       const generatedHTML = templates.cartProduct(menuProduct);
       // thisCart.element = utils.createDOMFromHTML(generatedHTML);
       // thisCart.dom.productList.appendChild(thisCart.element);
@@ -503,7 +493,6 @@
       });
 
       thisCartProduct.dom.wrapper.dispatchEvent(event);
-      // console.log('remove');
     }
 
     initActions() {
@@ -545,11 +534,6 @@
 
     init: function() {
       const thisApp = this;
-      //console.log('*** App starting ***');
-      //console.log('thisApp:', thisApp);
-      //console.log('classNames:', classNames);
-      //console.log('settings:', settings);
-      //console.log('templates:', templates);
 
       thisApp.initData();
       thisApp.initMenu();
