@@ -386,10 +386,8 @@
       const thisCart = this;
 
       thisCart.dom.toggleTrigger.addEventListener('click', function (event) {
-
         event.preventDefault();
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
-
       });
 
       thisCart.dom.productList.addEventListener('updated', function () {
@@ -398,6 +396,11 @@
 
       thisCart.dom.productList.addEventListener('remove', function (event) {
         thisCart.remove(event.detail.cartProduct);
+      });
+
+      thisCart.dom.form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        thisCart.sendOrder();
       });
     }
 
@@ -444,6 +447,32 @@
       thisCart.products.splice(index, 1);
       cartProduct.dom.wrapper.remove();
       thisCart.update();
+    }
+
+    sendOrder() {
+      const thisCart = this;
+
+      const url = settings.db.url + '/' + settings.db.order;
+
+      const payload = {
+        address: 'test',
+        totalPrice: thisCart.totalPrice,
+      };
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      };
+
+      fetch(url, options)
+        .then(function (response) {
+          return response.json();
+        }).then(function (parsedResponse) {
+          console.log('parsedResponse:', parsedResponse);
+        });
     }
   }
 
@@ -532,20 +561,20 @@
       const url = settings.db.url + '/' + settings.db.product;
 
       fetch(url)
-      .then(function(rawResponse){
-        return rawResponse.json();
-      })
-      .then(function(parsedResponse){
-        console.log('parsedResponse', parsedResponse);
+        .then(function(rawResponse){
+          return rawResponse.json();
+        })
+        .then(function(parsedResponse){
+          console.log('parsedResponse', parsedResponse);
 
-        /* save parsedResponse as thisApp.data.products */
-        thisApp.data.products = parsedResponse;
+          /* save parsedResponse as thisApp.data.products */
+          thisApp.data.products = parsedResponse;
 
-        /* execute initMenu method */
-        thisApp.initMenu();
-      });
+          /* execute initMenu method */
+          thisApp.initMenu();
+        });
 
-    console.log('thisApp.data', JSON.stringify(thisApp.data));
+      console.log('thisApp.data', JSON.stringify(thisApp.data));
     },
 
     initCart: function() {
