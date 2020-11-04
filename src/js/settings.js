@@ -1,3 +1,5 @@
+import {Handlebars} from 'index.html';
+
 export const select = {
   templateOf: {
     menuProduct: '#template-menu-product',

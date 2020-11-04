@@ -1,3 +1,6 @@
+import {templates, utils, select, classNames} from './settings.js';
+import AmountWidget from './components/AmountWidget.js';
+
 class Product {
   constructor(id, data) {
     const thisProduct = this;
