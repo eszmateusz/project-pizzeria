@@ -1,63 +1,62 @@
-/* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
+import {settings, select} from './settings.js';
+import utils from './utils.js';
+import Product from './components/Product.js';
+import Cart from './components/Cart.js';
+import CartProduct from './components/CartProduct.js';
+import AmountWidget from './components/AmountWidget.js';
 
-{
-  'use strict';
+const app = {
+  initMenu: function() {
+    const thisApp = this;
 
+    for (let productData in thisApp.data.products) {
+      new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
+    }
+  },
 
+  initData: function() {
+    const thisApp = this;
 
+    thisApp.data = {};
 
+    const url = settings.db.url + '/' + settings.db.product;
 
+    fetch(url)
+      .then(function(rawResponse){
+        return rawResponse.json();
+      })
+      .then(function(parsedResponse){
+        console.log('parsedResponse', parsedResponse);
 
+        /* save parsedResponse as thisApp.data.products */
+        thisApp.data.products = parsedResponse;
 
+        /* execute initMenu method */
+        thisApp.initMenu();
+      });
 
+    console.log('thisApp.data', JSON.stringify(thisApp.data));
+  },
 
-  const app = {
-    initMenu: function() {
-      const thisApp = this;
+  initCart: function() {
+    const thisApp = this;
 
-      for (let productData in thisApp.data.products) {
-        new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
-      }
-    },
+    const cartElem = document.querySelector(select.containerOf.cart);
+    thisApp.cart = new Cart(cartElem);
 
-    initData: function() {
-      const thisApp = this;
+    thisApp.productList = document.querySelector(select.containerOf.menu);
 
-      thisApp.data = {};
+    thisApp.productList.addEventListener('add-to-cart', function(event){
+      app.cart.add(event.detail.product);
+    });
+  },
 
-      const url = settings.db.url + '/' + settings.db.product;
+  init: function() {
+    const thisApp = this;
 
-      fetch(url)
-        .then(function(rawResponse){
-          return rawResponse.json();
-        })
-        .then(function(parsedResponse){
-          console.log('parsedResponse', parsedResponse);
+    thisApp.initData();
+    thisApp.initCart();
+  },
+};
 
-          /* save parsedResponse as thisApp.data.products */
-          thisApp.data.products = parsedResponse;
-
-          /* execute initMenu method */
-          thisApp.initMenu();
-        });
-
-      console.log('thisApp.data', JSON.stringify(thisApp.data));
-    },
-
-    initCart: function() {
-      const thisApp = this;
-
-      const cartElem = document.querySelector(select.containerOf.cart);
-      thisApp.cart = new Cart(cartElem);
-    },
-
-    init: function() {
-      const thisApp = this;
-
-      thisApp.initData();
-      thisApp.initCart();
-    },
-  };
-
-  app.init();
-}
+app.init();
