@@ -159,14 +159,29 @@ class Booking {
 
     for (let table of thisBooking.dom.tables) {
       table.addEventListener('click', function() {
+        
         let tableId = table.getAttribute(settings.booking.tableIdAttribute);
 
         if (!isNaN(tableId)) {
           tableId = parseInt(tableId);
         }
 
-        if (!thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)) {
-          table.classList.toggle(classNames.booking.tableBooked);
+        if (typeof thisBooking.booked[thisBooking.date][thisBooking.hour] == 'undefined') {
+          if (table.classList.contains(classNames.booking.tableBooked)) {          
+            table.classList.remove(classNames.booking.tableBooked);
+            // console.log('Booking for the table is removed now.');
+          } else {
+            table.classList.add(classNames.booking.tableBooked);
+          // console.log('Table is booked now.');
+          }
+        } else if (thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)) {
+        // console.log('Table is already booked.');
+        } else if (table.classList.contains(classNames.booking.tableBooked)) {
+          table.classList.remove(classNames.booking.tableBooked);
+        // console.log('Booking for the table is removed now.');
+        } else {
+          table.classList.add(classNames.booking.tableBooked);
+        // console.log('Table is booked now.');
         }
       });
     }
