@@ -10,8 +10,38 @@
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  position: static;
 
   a {
+    margin: 0;
+    padding: 0;
+
+    p {
+      transition: 0.5s ease-in-out;
+    }
+
+    p:nth-child(2) {
+      opacity: 0;
+      font-family: $font-text;
+      font-size: 14px;
+      font-weight: $font-light;
+      text-transform: initial;
+      top: 100px;
+    }
+
+    &:hover {
+      p:nth-child(1) {
+        transform: translate(-50%, -20px);
+      }
+
+      p:nth-child(2) {
+        opacity: 1;
+        transform: translate(-50%, -40px);
+      }
+    }
+  }
+
+  a:last-child {
     color: $color-main;
     margin: 24px 0 0;
   }
@@ -112,6 +142,53 @@
     &:hover {
       color: $color-main;
       cursor: pointer;
+    }
+  }
+}
+
+.carousel {
+  width: 604px;
+  min-height: 193px;
+  margin: 48px 0 31px;
+
+  .carousel-cell {
+    width: 100%;
+    transition: opacity 0.1s ease-in-out;
+  }
+
+  .flickity-page-dots {
+    bottom: 36px;
+  }
+}
+
+.opinion-card {
+  position: relative;
+  display: flex;
+  min-height: 193px;
+  margin: ($base-size * 3.5) auto;
+
+  .opinion-image {
+    min-width: 193px;
+    min-height: 193px;
+
+    img {
+      position: relative;
+    }
+  }
+
+  .opinion-text {
+    padding-left: 37px;
+    min-height: 230px;
+    margin: ($base-size * 1.5) 3px auto;
+
+    p {
+      line-height: 22px;
+    }
+
+    p:last-of-type {
+      font-style: italic;
+      margin-top: 25px;
+      letter-spacing: 0.1px;
     }
   }
 }

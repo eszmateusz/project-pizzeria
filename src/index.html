@@ -9,7 +9,9 @@
   <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="vendor/range-slider.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/flickity-fade@1/flickity-fade.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
@@ -65,26 +67,71 @@
   <div id="pages">
     <section id="home">
       <div class="home-wrapper container">
-        <div class="wrapper">
-          <div class="homepage-button button-smaller">
-            <p>ORDER ONLINE</p>
-            <img src="images/assets/pizza-1.jpg" alt="image">
-          </div>
-          <div class="homepage-button button-smaller">
-            <p>BOOK A TABLE</p>
-            <img src="images/assets/pizza-2.jpg" alt="image">
-          </div>
+        <div class="wrapper main-nav">
+          <a href="#order">
+            <div class="homepage-button button-smaller">
+              <p>ORDER ONLINE</p>
+              <p>Delicious food delivered to your door</p>
+              <img src="images/assets/pizza-1.jpg" alt="image">
+            </div>
+          </a>
+          <a href="#booking">
+            <div class="homepage-button button-smaller">
+              <p>BOOK A TABLE</p>
+              <p>Come to restaurant and feel special atmosphere</p>
+              <img src="images/assets/pizza-2.jpg" alt="image">
+            </div>
+          </a>
           <div class="homepage-button button-bigger">
             <p>OPENING HOURS:</p>
             <p>TUE-SUN, 12PM - 12AM</p>
           </div>
         </div>
         <div class="wrapper">
-          <p><strong>AMAZING SERVICE!</strong><br><br>
-            Lorem ipsum sit amet,consectetur adipiscing elit.<br>
-            Aliquam egestas viverra tortor, eu ullamcorper dui imperdiet<br>
-            nec. Nunc sed dolor at elit lobortis sodales.<br><br>
-            <i>- Margaret Osborne</i></p>
+          <div class="carousel" data-flickity='{ "autoPlay": 3000, "wrapAround": true, "fade": true, "prevNextButtons": false }'>
+            <div class="carousel-cell">
+              <div class="opinion-card">
+                <div class="opinion-image homepage-button button-square">
+                  <img src="images/assets/pizza-2.jpg" alt="image">
+                </div>
+                <div class="opinion-text">
+                  <p><strong>AMAZING SERVICE!</strong><br><br>
+                  Lorem ipsum sit amet,consectetur adipiscing elit.<br>
+                  Aliquam egestas viverra tortor, eu ullamcorper dui imperdiet<br>
+                  nec. Nunc sed dolor at elit lobortis sodales.<br><br>
+                  <i>- Margaret Osborne</i></p>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-cell">
+              <div class="opinion-card">
+                <div class="opinion-image homepage-button button-square">
+                  <img src="images/assets/pizza-3.jpg" alt="image">
+                </div>
+                <div class="opinion-text">
+                  <p><strong>PERFECT EMOTIONS!</strong><br><br>
+                    Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam<br>
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,<br>
+                  totam rem aperiam, eaque ipsa quae ab illo inventore<br><br>
+                  <i>- Elisabeth Young</i></p>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-cell">
+              <div class="opinion-card">
+                <div class="opinion-image homepage-button button-square">
+                  <img src="images/assets/pizza-1.jpg" alt="image">
+                </div>
+                <div class="opinion-text">
+                  <p><strong>GREAT FOOD AND STARTER!</strong><br><br>
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,<br>
+                  Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam<br>
+                  nec. Nunc sed dolor at elit lobortis sodales.<br><br>
+                  <i>- Paul Kentucky</i></p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="wrapper">
           <div class="homepage-button button-square">
@@ -331,6 +378,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="vendor/range-slider.min.js"></script>
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+  <script src="https://unpkg.com/flickity-fade@1/flickity-fade.js"></script>
   <script src="js/app.js" type="module"></script>
 </body>
 </html>
