@@ -11,6 +11,8 @@ class AmountWidget extends BaseWidget {
 
     thisWidget.initActions();
 
+    thisWidget.renderValue();
+
     // console.log('AmountWidget:', thisWidget);
   }
 
