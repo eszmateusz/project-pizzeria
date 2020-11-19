@@ -36,6 +36,7 @@ export const select = {
       input: `input[name="date"]`,
     },
     hourPicker: {
+      slider: '.rangeSlider',
       wrapper: '.hour-picker',
       input: 'input[type="range"]',
       output: '.output',

@@ -36,8 +36,6 @@ class Booking {
         endDateParam,
       ],
     };
-
-    // console.log('getData params', params);
     
     const urls = {
       booking:       settings.db.url + '/' + settings.db.booking
@@ -47,8 +45,6 @@ class Booking {
       eventsRepeat:  settings.db.url + '/' + settings.db.event
                                      + '?' + params.eventsRepeat.join('&'),
     };
-
-    // console.log('getData urls', urls);
 
     Promise.all([
       fetch(urls.booking),
@@ -97,8 +93,6 @@ class Booking {
       }
     }
 
-    //console.log('thisBooking.booked', thisBooking.booked);
-
     thisBooking.updateDOM();
   }
 
@@ -112,7 +106,6 @@ class Booking {
     const startHour = utils.hourToNumber(hour);
 
     for (let hourBlock = startHour; hourBlock < startHour + duration; hourBlock += 0.5) {
-      // console.log('loop', hourBlock);
 
       if (typeof thisBooking.booked[date][hourBlock] == 'undefined') {
         thisBooking.booked[date][hourBlock] = [];
@@ -179,52 +172,10 @@ class Booking {
       } else {
         table.classList.remove(classNames.booking.tableBooked);
       }
+
+      thisBooking.rangeSliderColour();
     }
   }
-
-  /* chooseTable() {
-    const thisBooking = this;
-
-    for (let table of thisBooking.dom.tables) {
-      table.addEventListener('click', function (event) {
-        event.preventDefault();
-
-        const tableClicked = table.getAttribute(settings.booking.tableIdAttribute);
-        
-        let tableId = table.getAttribute(settings.booking.tableIdAttribute);
-
-        if (!isNaN(tableId)) {
-          tableId = parseInt(tableId);
-        }
-
-        if (typeof thisBooking.booked[thisBooking.date][thisBooking.hour] == 'undefined') {
-          
-          if (table.classList.contains(classNames.booking.tableBooked)) {          
-            table.classList.remove(classNames.booking.tableBooked);
-            // console.log('Booking for the table is removed now.');
-
-          } else {
-            table.classList.add(classNames.booking.tableBooked);
-            // console.log('Table is booked now.');
-          }
-
-        } else if (thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)) {
-        // console.log('Table is already booked.');
-
-        } else if (table.classList.contains(classNames.booking.tableBooked)) {
-          table.classList.remove(classNames.booking.tableBooked);
-          // console.log('Booking for the table is removed now.');
-
-        } else {
-          table.classList.add(classNames.booking.tableBooked);
-          // console.log('Table is booked now.');
-        }
-
-        thisBooking.tableSelected = tableClicked;
-
-      });
-    }
-  } */
 
   sendBooking() {
     const thisBooking = this;
@@ -281,6 +232,36 @@ class Booking {
       });
   }
 
+  rangeSliderColour() {
+    const thisBooking = this;
+
+    const bookedHours = thisBooking.booked[thisBooking.date]; //godziny od 12 do 19.30 potem undefined
+    const colorArray = [];
+
+    const slider = document.querySelector('.rangeSlider');
+    //console.log(slider);
+
+    const openHour = settings.hours.open;
+    const closeHour = settings.hours.close;
+    const step = 0.5; // 30min
+
+    for (let bookedHour in bookedHours) {
+      const firstValue = ((bookedHour - openHour) * 100) / (closeHour - openHour);
+      const secondValue = (((bookedHour - openHour) + step) * 100) / (closeHour - openHour);
+
+      if (bookedHours[bookedHour].length === 3) {
+        colorArray.push('/*' + bookedHour + '*/red ' + firstValue + '%, red ' + secondValue + '%');
+      } else if (bookedHours[bookedHour].length === 2) {
+        colorArray.push('/*' + bookedHour + '*/orange ' + firstValue + '%, orange ' + secondValue + '%');
+      } else {
+        colorArray.push('/*' + bookedHour + '*/green ' + firstValue + '%, green ' + secondValue + '%');
+      }
+    }
+
+    const gradientColor = colorArray.sort();
+    slider.style.background = 'linear-gradient(to right, ' + gradientColor + ')';
+  }
+  
   render(bookingWrapper) {
     const thisBooking = this;
 
